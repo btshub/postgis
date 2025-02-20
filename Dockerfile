@@ -2,27 +2,23 @@
 #
 # NOTE: THIS DOCKERFILE IS GENERATED VIA "make update"! PLEASE DO NOT EDIT IT DIRECTLY.
 #
-
-# ARG BASE_IMAGE=hub.atomgit.com/amd64/postgres:alpine3.18
-ARG BASE_IMAGE=public.ecr.aws/docker/library/postgres:15-alpine3.21
+ARG  library/postgres:15-alpine3.21
 FROM ${BASE_IMAGE}
 
 LABEL maintainer="PostGIS Project - https://postgis.net" \
-    org.opencontainers.image.description="PostGIS 3.5.0 spatial database extension with PostgreSQL 16 Alpine" \
+    org.opencontainers.image.description="PostGIS 3.5.0 spatial database extension with PostgreSQL 15 Alpine" \
     org.opencontainers.image.source="https://github.com/postgis/docker-postgis"
 
 ENV POSTGIS_VERSION 3.5.0
 ENV POSTGIS_SHA256 a47b8415ab88437390eba28e51b993cf0a2357057c277eea00378b8b76ab2316
 
-RUN echo "http://mirrors.aliyun.com/alpine/v3.21/main" > /etc/apk/repositories && \
-    echo "http://mirrors.aliyun.com/alpine/v3.21/community" >> /etc/apk/repositories && \
-    set -eux \
+RUN set -eux \
     && apk add --no-cache --virtual .fetch-deps \
     ca-certificates \
     openssl \
     tar \
     \
-    && wget -O postgis.tar.gz "https://www.ghproxy.cn/https://github.com/postgis/postgis/archive/${POSTGIS_VERSION}.tar.gz" \
+    && wget -O postgis.tar.gz "https://github.com/postgis/postgis/archive/${POSTGIS_VERSION}.tar.gz" \
     && echo "${POSTGIS_SHA256} *postgis.tar.gz" | sha256sum -c - \
     && mkdir -p /usr/src/postgis \
     && tar \
