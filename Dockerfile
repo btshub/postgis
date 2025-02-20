@@ -2,7 +2,9 @@
 #
 # NOTE: THIS DOCKERFILE IS GENERATED VIA "make update"! PLEASE DO NOT EDIT IT DIRECTLY.
 #
-ARG  postgres:15-alpine
+
+# ARG BASE_IMAGE=hub.atomgit.com/amd64/postgres:alpine3.18
+ARG  BASE_IMAGE=docker.io/library/postgres:15-alpine3.21
 FROM ${BASE_IMAGE}
 
 LABEL maintainer="PostGIS Project - https://postgis.net" \
